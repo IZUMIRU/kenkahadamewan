@@ -63,7 +63,7 @@ function analyzeSentiment(message) {
   };
 
   axios.post(url, data).then(response => {
-    console.log(response.data);
+    console.log(response.data['documentSentiment']['score']);
   });
 
   // const result    = request.post(url, params);
