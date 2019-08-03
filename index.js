@@ -44,7 +44,7 @@ function main() {
  * @param string message
  * @return boolean
  */
-function analyzeSentiment(message) {
+async function analyzeSentiment(message) {
   const axios  = require('axios');
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
@@ -57,8 +57,8 @@ function analyzeSentiment(message) {
     'encodingType': 'UTF8'
   };
 
-  const response = axios.post(url, data);
-  const score = response.data['documentSentiment']['score'];
+  const response = await axios.post(url, data);
+  const score    = response.data['documentSentiment']['score'];
   console.log(score);
 
   return score < 0 ? true : false;
