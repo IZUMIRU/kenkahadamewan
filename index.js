@@ -1,9 +1,9 @@
-main();
+// main();
 
 /**
  * メイン処理
  */
-function main() {
+// function main() {
   const server = require('express')();
   const line   = require('@line/bot-sdk');
   const config = {
@@ -36,4 +36,4 @@ function main() {
       }
     );
   });
-}
+// }
