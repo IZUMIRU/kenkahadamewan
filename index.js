@@ -63,7 +63,7 @@ function analyzeSentiment(message) {
   };
 
   axios.post(url, params).then(response => {
-    console.log('body:', response.data);
+    console.log(response);
   });
 
   // const result    = request.post(url, params);
