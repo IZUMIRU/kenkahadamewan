@@ -20,15 +20,12 @@ function main() {
 
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        const sentiment = analyzeSentiment(event.message.text)
-          // console.log('来てる1');
-        // if (sentiment === 'negative') {
-        //   console.log('来てる2');
-        //   events_processed.push(bot.replyMessage(event.replyToken, {
-        //     type: 'text',
-        //     text: 'ネガティブ！！'
-        //   }));
-        // }
+        if (analyzeSentiment(event.message.text)) {
+          events_processed.push(bot.replyMessage(event.replyToken, {
+            type: 'text',
+            text: 'ネガティブ！！'
+          }));
+        }
       }
     });
 
@@ -42,10 +39,10 @@ function main() {
 
 /**
  * GoogleCloudNaturalLanguageAPIを叩いて、
- * LINEに送信されたテキストがpositiveかnegativeか判別する
+ * LINEに送信されたテキストがnegativeの場合trueを返す
  *
  * @param string message
- * @return string sentiment
+ * @return boolean
  */
 function analyzeSentiment(message) {
   const axios  = require('axios');
@@ -61,20 +58,9 @@ function analyzeSentiment(message) {
   };
 
   axios.post(url, data).then(response => {
-    const score     = response.data['documentSentiment']['score'];
-    const sentiment = score >= 0 ? 'positive' : 'negative';
-
+    const score = response.data['documentSentiment']['score'];
     console.log(score);
-    console.log(sentiment);
 
-    // return sentiment;
-
-    if (sentiment === 'negative') {
-      console.log('来てる2');
-      events_processed.push(bot.replyMessage(event.replyToken, {
-        type: 'text',
-        text: 'ネガティブ！！'
-      }));
-    }
+    return score < 0 ? true : false;
   });
 }
