@@ -19,7 +19,9 @@ async function main() {
     let events_processed = [];
 
     req.body.events.forEach((event) => {
-      if (event.type == 'message' && event.message.type == 'text'){
+      const message = event.message;
+
+      if (event.type == 'message' && message.type == 'text'){
         const axios  = require('axios');
         const apiKey = process.env.GCNL_API_KEY;
         const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
@@ -27,7 +29,7 @@ async function main() {
           'document' : {
             'type'     : 'PLAIN_TEXT',
             'language' : 'ja',
-            'content'  : message
+            'content'  : message.text
           },
           'encodingType': 'UTF8'
         };
