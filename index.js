@@ -63,12 +63,8 @@ function analyzeSentiment(message) {
   };
 
   axios.post(url, data).then(response => {
-    console.log(response.data['documentSentiment']['score']);
+    const score     = response.data['documentSentiment']['score'];
+    const sentiment = score >= 0 ? 'positive' : 'negative';
+    return sentiment;
   });
-
-  // const result    = request.post(url, params);
-  // const score     = JSON.parse(result)['documentSentiment']['score'];
-  // const sentiment = score >= 0 ? 'positive' : 'negative';
-
-  // return sentiment;
 }
