@@ -20,6 +20,7 @@ function main() {
 
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
+        console.log(analyzeSentiment(event.message.text));
         if (analyzeSentiment(event.message.text)) {
           events_processed.push(bot.replyMessage(event.replyToken, {
             type: 'text',
