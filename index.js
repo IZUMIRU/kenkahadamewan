@@ -18,7 +18,7 @@ function main() {
     res.sendStatus(200);
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        post(event.message.text);
+        post(event);
       }
     });
   });
@@ -29,10 +29,10 @@ function main() {
  * LINEに送信されたテキストがnegativeであれば
  * LINEにメッセージを送信する
  *
- * @param string message
+ * @param object event
  * @return void
  */
-async function post(message) {
+async function post(event) {
   const axios  = require('axios');
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
@@ -40,7 +40,7 @@ async function post(message) {
     'document' : {
       'type'     : 'PLAIN_TEXT',
       'language' : 'ja',
-      'content'  : message
+      'content'  : event.message.text
     },
     'encodingType': 'UTF8'
   };
