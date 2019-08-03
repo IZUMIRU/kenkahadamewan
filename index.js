@@ -20,7 +20,9 @@ function main() {
 
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        if (analyzeSentiment(event.message.text)) {
+        console.log(analyzeSentiment(event.message.text));
+        if (analyzeSentiment(event.message.text) === 'negative') {
+          console.log('ちゃんと待ってる？');
           events_processed.push(bot.replyMessage(event.replyToken, {
             type: 'text',
             text: 'ネガティブ！！'
@@ -39,10 +41,10 @@ function main() {
 
 /**
  * GoogleCloudNaturalLanguageAPIを叩いて、
- * LINEに送信されたテキストがnegativeの場合trueを返す
+ * LINEに送信されたテキストがpositiveかnegativeか返す
  *
  * @param string message
- * @return boolean
+ * @return string
  */
 async function analyzeSentiment(message) {
   const axios  = require('axios');
@@ -61,5 +63,5 @@ async function analyzeSentiment(message) {
   const score    = response.data['documentSentiment']['score'];
   console.log(score);
 
-  return score < 0 ? true : false;
+  return score >= 0 ? 'positive' : 'negative';
 }
