@@ -20,7 +20,6 @@ function main() {
 
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        console.log(analyzeSentiment(event.message.text));
         if (analyzeSentiment(event.message.text)) {
           events_processed.push(bot.replyMessage(event.replyToken, {
             type: 'text',
@@ -58,10 +57,9 @@ function analyzeSentiment(message) {
     'encodingType': 'UTF8'
   };
 
-  axios.post(url, data).then(response => {
-    const score = response.data['documentSentiment']['score'];
-    console.log(score);
+  const response = axios.post(url, data);
+  const score = response.data['documentSentiment']['score'];
+  console.log(score);
 
-    return score < 0 ? true : false;
-  });
+  return score < 0 ? true : false;
 }
