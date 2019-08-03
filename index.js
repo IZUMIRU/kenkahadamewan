@@ -21,9 +21,10 @@ function main() {
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
         if(analyzeSentiment(event.message.text) === 'negative') {
+          console.log('来てる');
           events_processed.push(bot.replyMessage(event.replyToken, {
             type: 'text',
-            text: 'ネガティブ！！fi'
+            text: 'ネガティブ！！'
           }));
         }
       }
@@ -55,11 +56,6 @@ function analyzeSentiment(message) {
       'content'  : message
     },
     'encodingType': 'UTF8'
-  };
-  const params = {
-    'contentType' : 'application/json',
-    'method'      : 'post',
-    'payload'     : JSON.stringify(data)
   };
 
   axios.post(url, data).then(response => {
