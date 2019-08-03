@@ -62,7 +62,7 @@ function analyzeSentiment(message) {
     'payload'     : JSON.stringify(data)
   };
 
-  axios.post(url, params).then(response => {
+  axios.post(url, data).then(response => {
     console.log(response);
   });
 
