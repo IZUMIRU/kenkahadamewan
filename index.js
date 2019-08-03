@@ -23,7 +23,7 @@ function main() {
         if(analyzeSentiment(event.message.text) === 'negative') {
           events_processed.push(bot.replyMessage(event.replyToken, {
             type: 'text',
-            text: sentiment
+            text: 'ネガティブ！！fi'
           }));
         }
       }
