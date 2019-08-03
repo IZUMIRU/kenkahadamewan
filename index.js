@@ -15,9 +15,12 @@ function main() {
 
   server.post('/bot/webhook', line.middleware(config), (req, res, next) => {
     res.sendStatus(200);
+
+    let events_processed = [];
+
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        post(event.message.text);
+        post(event.message.text, events_processed);
       }
     });
   });
@@ -29,9 +32,10 @@ function main() {
  * LINEにメッセージを送信する
  *
  * @param string message
+ * @param array events_processed
  * @return void
  */
-async function post(message) {
+async function post(message, events_processed) {
   const axios  = require('axios');
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
