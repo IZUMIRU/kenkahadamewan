@@ -45,6 +45,7 @@ function main() {
  * @return string sentiment
  */
 function analyzeSentiment(message) {
+  const request = require("request");
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
   const data   = {
@@ -61,7 +62,7 @@ function analyzeSentiment(message) {
     'payload'     : JSON.stringify(data)
   };
 
-  const result    = UrlFetchApp.fetch(url, params);
+  const result    = request.post(url, params);
   const score     = JSON.parse(result)['documentSentiment']['score'];
   const sentiment = score >= 0 ? 'positive' : 'negative';
 
