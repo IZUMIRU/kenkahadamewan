@@ -3,7 +3,7 @@ main();
 /**
  * メイン処理
  */
-function main() {
+async function main() {
   const server = require('express')();
   const line   = require('@line/bot-sdk');
   const config = {
@@ -20,7 +20,28 @@ function main() {
 
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        post(event.message.text, events_processed);
+        const axios  = require('axios');
+        const apiKey = process.env.GCNL_API_KEY;
+        const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
+        const data   = {
+          'document' : {
+            'type'     : 'PLAIN_TEXT',
+            'language' : 'ja',
+            'content'  : message
+          },
+          'encodingType': 'UTF8'
+        };
+      
+        const response = await axios.post(url, data);
+        const score    = response.data['documentSentiment']['score'];
+        console.log(score);
+      
+        if (score < 0) {
+          events_processed.push(bot.replyMessage(event.replyToken, {
+            type: 'text',
+            text: 'ネガティブ！！'
+          }));
+        }
       }
     });
   });
@@ -35,27 +56,27 @@ function main() {
  * @param array events_processed
  * @return void
  */
-async function post(message, events_processed) {
-  const axios  = require('axios');
-  const apiKey = process.env.GCNL_API_KEY;
-  const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
-  const data   = {
-    'document' : {
-      'type'     : 'PLAIN_TEXT',
-      'language' : 'ja',
-      'content'  : message
-    },
-    'encodingType': 'UTF8'
-  };
+// async function post(message, events_processed) {
+//   const axios  = require('axios');
+//   const apiKey = process.env.GCNL_API_KEY;
+//   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
+//   const data   = {
+//     'document' : {
+//       'type'     : 'PLAIN_TEXT',
+//       'language' : 'ja',
+//       'content'  : message
+//     },
+//     'encodingType': 'UTF8'
+//   };
 
-  const response = await axios.post(url, data);
-  const score    = response.data['documentSentiment']['score'];
-  console.log(score);
+//   const response = await axios.post(url, data);
+//   const score    = response.data['documentSentiment']['score'];
+//   console.log(score);
 
-  if (score < 0) {
-    events_processed.push(bot.replyMessage(event.replyToken, {
-      type: 'text',
-      text: 'ネガティブ！！'
-    }));
-  }
-}
+//   if (score < 0) {
+//     events_processed.push(bot.replyMessage(event.replyToken, {
+//       type: 'text',
+//       text: 'ネガティブ！！'
+//     }));
+//   }
+// }
