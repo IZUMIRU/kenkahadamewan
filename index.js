@@ -20,8 +20,10 @@ function main() {
 
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        if(analyzeSentiment(event.message.text) == 'negative') {
-          console.log('来てる');
+        const sentiment = analyzeSentiment(event.message.text)
+          console.log('来てる1');
+        if (sentiment === 'negative') {
+          console.log('来てる2');
           events_processed.push(bot.replyMessage(event.replyToken, {
             type: 'text',
             text: 'ネガティブ！！'
