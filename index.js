@@ -26,8 +26,7 @@ function main() {
 
 /**
  * GoogleCloudNaturalLanguageAPIを叩いて、
- * LINEに送信されたテキストがnegativeであれば
- * LINEにメッセージを送信する
+ * LINEに送信されたテキストがnegativeであれば、動画を返信する
  *
  * @param object event
  * @return void
@@ -52,8 +51,8 @@ async function post(event) {
     try {
       client.replyMessage(event.replyToken,{
         type               : 'video',
+        originalContentUrl : 'https://media3.giphy.com/media/XH5COUUp3HvEs/giphy-loop.mp4?cid=1dfacafe5d466a4c37664c7459ac0420&rid=giphy-loop.mp4',
         // gifで送ってもjpeg変換される仕様
-        originalContentUrl : 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.mp4',
         previewImageUrl    : 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.gif'
       });
     } catch (e) {
