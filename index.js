@@ -49,14 +49,14 @@ async function post(event) {
   console.log(score);
 
   if (score < 0) {
-    // client.replyMessage(event.replyToken, {
-    //   type : 'text',
-    //   text : 'ネガティブ！！'
-    // });
-    client.replyMessage(event.replyToken,{
-      type               : 'image',
-      originalContentUrl : 'https://i.gyazo.com/e772c3b48a07716226f7184d7f417cda.png',
-      previewImageUrl    : 'https://i.gyazo.com/f1fbf098052ee9b1b0ccd16e70051e39.png'
-    });
+    try {
+      client.replyMessage(event.replyToken,{
+        type               : 'image',
+        originalContentUrl : 'https://i.gyazo.com/e772c3b48a07716226f7184d7f417cda.png',
+        previewImageUrl    : 'https://i.gyazo.com/f1fbf098052ee9b1b0ccd16e70051e39.png'
+      });
+    } catch (e) {
+      console.error('try catch with await: ' + e);
+    }
   }
 }
