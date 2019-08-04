@@ -36,7 +36,7 @@ function main() {
  * @param object event
  * @return bool
  */
-function analyzeSentiment() {
+function analyzeSentiment(event) {
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
   const data   = {
