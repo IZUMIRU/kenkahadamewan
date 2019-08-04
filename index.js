@@ -39,7 +39,7 @@ function main() {
  */
 async function analyzeSentiment(event) {
   const apiKey = process.env.GCNL_API_KEY;
-  const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
+  const url    = `https://language.googleapis.com/v1/documents:analyzeSentiment?key=${apiKey}`;
   const data   = {
     'document' : {
       'type'     : 'PLAIN_TEXT',
@@ -61,10 +61,14 @@ async function analyzeSentiment(event) {
  * @return array content
  */
 async function getContent() {
-  const apiKey = process.env.GIPHY_API_KEY;
-  const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
-  const response = await axios.get(url);
-  console.log(response)
+  try {
+    const apiKey = process.env.GIPHY_API_KEY;
+    const url    = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
+    const response = await axios.get(url);
+    console.log(response['data'])
+  } catch (e) {
+    console.error(`try catch with await: ${e}`);
+  }
 }
 
 /**
@@ -83,6 +87,6 @@ async function getContent() {
       previewImageUrl    : content['previewImageUrl']
     });
   } catch (e) {
-    console.error('try catch with await: ' + e);
+    console.error(`try catch with await: ${e}`);
   }
 }
