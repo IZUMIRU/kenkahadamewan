@@ -1,6 +1,7 @@
 const server = require('express')();
 const line   = require('@line/bot-sdk');
 const axios  = require('axios');
+const async  = require('async');
 const config = {
   channelAccessToken: process.env.LINE_ACCESS_TOKEN,
   channelSecret: process.env.LINE_CHANNEL_SECRET,
