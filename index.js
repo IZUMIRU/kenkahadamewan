@@ -65,8 +65,10 @@ async function getContent() {
     const apiKey   = process.env.GIPHY_API_KEY;
     const url      = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
     const response = await axios.get(url);
-    console.log(response['data']['data']['images']['looping']['mp4'])
-    console.log(response['data']['data']['images']['480w_still']['url'])
+    let content = {};
+    content.originalContentUrl = response['data']['data']['images']['looping']['mp4'];
+    content.previewImageUrl    = response['data']['data']['images']['480w_still']['url'];
+    return content;
   } catch (e) {
     console.error(`try catch with await: ${e}`);
   }
@@ -75,7 +77,7 @@ async function getContent() {
 /**
  * LINEで動画を送信する
  *
- * @param array content
+ * @param object content
  * @return void
  */
  function postMessage(content) {
@@ -83,9 +85,9 @@ async function getContent() {
     client.replyMessage(event.replyToken,{
       type               : 'video',
       // 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4'
-      originalContentUrl : content['originalContentUrl'],
+      originalContentUrl : content.originalContentUrl,
       // 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
-      previewImageUrl    : content['previewImageUrl']
+      previewImageUrl    : content.previewImageUrl
     });
   } catch (e) {
     console.error(`try catch with await: ${e}`);
