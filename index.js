@@ -70,6 +70,8 @@ async function getContent() {
     content.previewImageUrl    = response['data']['data']['images']['480w_still']['url'];
 
     console.log(content);
+    console.log(content.originalContentUrl);
+    console.log(content.previewImageUrl);
     return content;
   } catch (e) {
     console.error(`try catch with await: ${e}`);
