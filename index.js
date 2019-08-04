@@ -48,10 +48,11 @@ function analyzeSentiment(event) {
     'encodingType': 'UTF8'
   };
   const response = axios.post(url, data);
-  const score    = response.data['documentSentiment']['score'];
-  console.log(score);
+  console.log(response);
+  // const score    = response.data['documentSentiment']['score'];
+  // console.log(score);
   
-  return score < 0 ? true : false;
+  // return score < 0 ? true : false;
 }
 
 /**
