@@ -49,7 +49,7 @@ async function post(event) {
   console.log(score);
 
   if (score < 0) {
-    client.replyMessage(event.replyToken, {
+    await client.replyMessage(event.replyToken, {
       type : 'text',
       text : 'ネガティブ！！'
     });
