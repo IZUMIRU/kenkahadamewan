@@ -52,8 +52,8 @@ async function post(event) {
     try {
       client.replyMessage(event.replyToken,{
         type               : 'image',
-        originalContentUrl : 'https://i.gyazo.com/e772c3b48a07716226f7184d7f417cda.png',
-        previewImageUrl    : 'https://i.gyazo.com/f1fbf098052ee9b1b0ccd16e70051e39.png'
+        originalContentUrl : 'https://media.giphy.com/media/Mca0CEJnjUuX4tZDkN/giphy.gif',
+        previewImageUrl    : 'https://media.giphy.com/media/Mca0CEJnjUuX4tZDkN/giphy.gif'
       });
     } catch (e) {
       console.error('try catch with await: ' + e);
