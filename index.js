@@ -13,12 +13,15 @@ main();
 /**
  * メイン処理
  */
-function main() {
+async function main() {
   server.post('/bot/webhook', line.middleware(config), function (req, res, next) {
     res.sendStatus(200);
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
-        post(event);
+        const negative = await analyzeSentiment(event);
+        if (negative) {
+          await postMessage(event);
+        }
       }
     });
   });
@@ -26,12 +29,13 @@ function main() {
 
 /**
  * GoogleCloudNaturalLanguageAPIを叩いて、
- * LINEに送信されたテキストがnegativeであれば、動画を返信する
+ * positiveかnegativeか判別する
+ * negativeであればtrueを返す
  *
  * @param object event
- * @return void
+ * @return bool
  */
-async function post(event) {
+function analyzeSentiment() {
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
   const data   = {
@@ -42,20 +46,27 @@ async function post(event) {
     },
     'encodingType': 'UTF8'
   };
-
-  const response = await axios.post(url, data);
+  const response = axios.post(url, data);
   const score    = response.data['documentSentiment']['score'];
   console.log(score);
+  
+  return score < 0 ? true : false;
+}
 
-  if (score < 0) {
-    try {
-      client.replyMessage(event.replyToken,{
-        type               : 'video',
-        originalContentUrl : 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4',
-        previewImageUrl    : 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
-      });
-    } catch (e) {
-      console.error('try catch with await: ' + e);
-    }
+/**
+ * LINEで動画を送信する
+ *
+ * @param object event
+ * @return void
+ */
+ function postMessage(event) {
+  try {
+    client.replyMessage(event.replyToken,{
+      type               : 'video',
+      originalContentUrl : 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4',
+      previewImageUrl    : 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
+    });
+  } catch (e) {
+    console.error('try catch with await: ' + e);
   }
 }
