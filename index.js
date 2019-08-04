@@ -12,6 +12,8 @@ main();
 
 /**
  * メイン処理
+ * LINE => GCNL API => GIPHY API => LINE
+ * @return void
  */
 function main() {
   server.post('/bot/webhook', line.middleware(config), function (req, res, next) {
@@ -35,7 +37,7 @@ function main() {
  * negativeであればtrueを返す
  *
  * @param object event
- * @return bool
+ * @return bool true|false
  */
 async function analyzeSentiment(event) {
   const apiKey = process.env.GCNL_API_KEY;
@@ -59,7 +61,7 @@ async function analyzeSentiment(event) {
  * GIPHY APIを叩いて、コンテンツを取得する
  *
  * @see https://developers.giphy.com/explorer/
- * @return array content
+ * @return object content
  */
 async function getContent() {
   try {
