@@ -51,9 +51,8 @@ async function post(event) {
     try {
       client.replyMessage(event.replyToken,{
         type               : 'video',
-        originalContentUrl : 'https://media3.giphy.com/media/XH5COUUp3HvEs/giphy-loop.mp4?cid=1dfacafe5d466a4c37664c7459ac0420&rid=giphy-loop.mp4',
-        // gifで送ってもjpeg変換される仕様
-        previewImageUrl    : 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.gif'
+        originalContentUrl : 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4',
+        previewImageUrl    : 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
       });
     } catch (e) {
       console.error('try catch with await: ' + e);
