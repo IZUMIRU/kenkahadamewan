@@ -62,10 +62,10 @@ async function analyzeSentiment(event) {
  */
 async function getContent() {
   try {
-    const apiKey = process.env.GIPHY_API_KEY;
-    const url    = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
+    const apiKey   = process.env.GIPHY_API_KEY;
+    const url      = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
     const response = await axios.get(url);
-    console.log(response['data']['images'])
+    console.log(response['data'])
     console.log(response['data']['images']['480w_still']['url'])
   } catch (e) {
     console.error(`try catch with await: ${e}`);
