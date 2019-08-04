@@ -17,7 +17,7 @@ function main() {
   server.post('/bot/webhook', line.middleware(config), function (req, res, next) {
     res.sendStatus(200);
     
-    req.body.events.forEach(function(event){
+    req.body.events.forEach(async function(event){
       if (event.type == 'message' && event.message.type == 'text'){
         const negative = await analyzeSentiment(event);
         if (negative) {
