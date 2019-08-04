@@ -50,7 +50,7 @@ async function post(event) {
 
   if (score < 0) {
     try {
-      const imageUrl = 'https://giphy.com/gifs/Mca0CEJnjUuX4tZDkN/html5';
+      const imageUrl = 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.mp4';
       client.replyMessage(event.replyToken,{
         type               : 'video',
         originalContentUrl : imageUrl,
