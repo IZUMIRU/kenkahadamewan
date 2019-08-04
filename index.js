@@ -5,8 +5,7 @@ const config = {
   channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
 server.listen(process.env.PORT || 3000);
-const bot = new line.Client(config);
-let events_processed = [];
+const client = new line.Client(config);
 
 main();
 
@@ -50,9 +49,14 @@ async function post(event) {
   console.log(score);
 
   if (score < 0) {
-    events_processed.push(bot.replyMessage(event.replyToken, {
-      type: 'text',
-      text: 'ネガティブ！！'
-    }));
+    client.replyMessage(event.replyToken, {
+      type : 'text',
+      text : 'ネガティブ！！'
+    });
+    client.replyMessage(event.replyToken,{
+      type               : 'image',
+      originalContentUrl : 'https://i.gyazo.com/e772c3b48a07716226f7184d7f417cda.png',
+      previewImageUrl    : 'https://i.gyazo.com/f1fbf098052ee9b1b0ccd16e70051e39.png'
+    });
   }
 }
