@@ -50,11 +50,11 @@ async function post(event) {
 
   if (score < 0) {
     try {
-      const imageUrl = 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.mp4';
       client.replyMessage(event.replyToken,{
         type               : 'video',
-        originalContentUrl : imageUrl,
-        previewImageUrl    : imageUrl
+        // gifで送ってもjpeg変換される仕様
+        originalContentUrl : 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.mp4',
+        previewImageUrl    : 'https://media.giphy.com/media/l0OWistc2HUjf6PKM/giphy.gif'
       });
     } catch (e) {
       console.error('try catch with await: ' + e);
