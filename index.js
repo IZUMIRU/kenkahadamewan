@@ -68,6 +68,8 @@ async function getContent() {
     let content = {};
     content.originalContentUrl = response['data']['data']['images']['looping']['mp4'];
     content.previewImageUrl    = response['data']['data']['images']['480w_still']['url'];
+
+    console.log(content);
     return content;
   } catch (e) {
     console.error(`try catch with await: ${e}`);
@@ -84,9 +86,7 @@ async function getContent() {
   try {
     client.replyMessage(event.replyToken,{
       type               : 'video',
-      // 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4'
       originalContentUrl : content.originalContentUrl,
-      // 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
       previewImageUrl    : content.previewImageUrl
     });
   } catch (e) {
