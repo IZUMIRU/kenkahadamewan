@@ -36,24 +36,22 @@ function main() {
  * @param object event
  * @return bool
  */
-function analyzeSentiment(event) {
-  // const apiKey = process.env.GCNL_API_KEY;
-  // const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
-  // const data   = {
-  //   'document' : {
-  //     'type'     : 'PLAIN_TEXT',
-  //     'language' : 'ja',
-  //     'content'  : event.message.text
-  //   },
-  //   'encodingType': 'UTF8'
-  // };
-  // const response = axios.post(url, data);
-  console.log(event.message.text);
-  // console.log(response.data);
-  // const score    = response.data['documentSentiment']['score'];
-  // console.log(score);
+async function analyzeSentiment(event) {
+  const apiKey = process.env.GCNL_API_KEY;
+  const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
+  const data   = {
+    'document' : {
+      'type'     : 'PLAIN_TEXT',
+      'language' : 'ja',
+      'content'  : event.message.text
+    },
+    'encodingType': 'UTF8'
+  };
+  const response = await axios.post(url, data);
+  const score    = response.data['documentSentiment']['score'];
+  console.log(score);
   
-  // return score < 0 ? true : false;
+  return score < 0 ? true : false;
 }
 
 /**
