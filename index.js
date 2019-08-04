@@ -93,8 +93,10 @@ async function getContent() {
   try {
     client.replyMessage(event.replyToken,{
       type               : 'video',
-      originalContentUrl : content.originalContentUrl,
-      previewImageUrl    : content.previewImageUrl
+      // originalContentUrl : content.originalContentUrl,
+      // previewImageUrl    : content.previewImageUrl
+      originalContentUrl : 'https://media2.giphy.com/media/tlfbU1wrLqKcw/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4',
+      previewImageUrl    : 'https://media3.giphy.com/media/tlfbU1wrLqKcw/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
     });
   } catch (e) {
     console.error(`try catch with await: ${e}`);
