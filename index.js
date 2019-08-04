@@ -22,7 +22,7 @@ function main() {
         const negative = await analyzeSentiment(event);
         if (negative) {
           const content = await getContent();
-          await postMessage(content);
+          await postMessage(event, content);
         }
       }
     });
@@ -65,13 +65,14 @@ async function getContent() {
     const apiKey   = process.env.GIPHY_API_KEY;
     const url      = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
     const response = await axios.get(url);
+
     let content = {};
-    content.originalContentUrl = response['data']['data']['images']['looping']['mp4'];
+    content.originalContentUrl = response.data.data.images.looping.mp4;
     content.previewImageUrl    = response['data']['data']['images']['480w_still']['url'];
 
-    console.log(content);
     console.log(content.originalContentUrl);
     console.log(content.previewImageUrl);
+
     return content;
   } catch (e) {
     console.error(`try catch with await: ${e}`);
@@ -81,10 +82,11 @@ async function getContent() {
 /**
  * LINEで動画を送信する
  *
+ * @param object event
  * @param object content
  * @return void
  */
- function postMessage(content) {
+ function postMessage(event, content) {
   try {
     client.replyMessage(event.replyToken,{
       type               : 'video',
