@@ -50,10 +50,11 @@ async function post(event) {
 
   if (score < 0) {
     try {
+      const imageUrl = 'https://giphy.com/gifs/Mca0CEJnjUuX4tZDkN/html5';
       client.replyMessage(event.replyToken,{
-        type               : 'image',
-        originalContentUrl : 'https://media.giphy.com/media/Mca0CEJnjUuX4tZDkN/giphy.gif',
-        previewImageUrl    : 'https://media.giphy.com/media/Mca0CEJnjUuX4tZDkN/giphy.gif'
+        type               : 'video',
+        originalContentUrl : imageUrl,
+        previewImageUrl    : imageUrl
       });
     } catch (e) {
       console.error('try catch with await: ' + e);
