@@ -1,7 +1,6 @@
 const server = require('express')();
 const line   = require('@line/bot-sdk');
 const axios  = require('axios');
-const async  = require('async');
 const config = {
   channelAccessToken: process.env.LINE_ACCESS_TOKEN,
   channelSecret: process.env.LINE_CHANNEL_SECRET,
@@ -18,7 +17,7 @@ function main() {
   server.post('/bot/webhook', line.middleware(config), function (req, res, next) {
     res.sendStatus(200);
     
-    async.each(req.body.events, async function(event, callback){
+    req.body.events.forEach(function(event){
       if (event.type == 'message' && event.message.type == 'text'){
         const negative = await analyzeSentiment(event);
         if (negative) {
