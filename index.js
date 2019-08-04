@@ -37,18 +37,19 @@ function main() {
  * @return bool
  */
 function analyzeSentiment(event) {
-  const apiKey = process.env.GCNL_API_KEY;
-  const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
-  const data   = {
-    'document' : {
-      'type'     : 'PLAIN_TEXT',
-      'language' : 'ja',
-      'content'  : event.message.text
-    },
-    'encodingType': 'UTF8'
-  };
-  const response = axios.post(url, data);
-  console.log(response.data);
+  // const apiKey = process.env.GCNL_API_KEY;
+  // const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
+  // const data   = {
+  //   'document' : {
+  //     'type'     : 'PLAIN_TEXT',
+  //     'language' : 'ja',
+  //     'content'  : event.message.text
+  //   },
+  //   'encodingType': 'UTF8'
+  // };
+  // const response = axios.post(url, data);
+  console.log(event.message.text);
+  // console.log(response.data);
   // const score    = response.data['documentSentiment']['score'];
   // console.log(score);
   
