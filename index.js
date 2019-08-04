@@ -49,7 +49,7 @@ async function analyzeSentiment(event) {
     'encodingType': 'UTF8'
   };
   const response = await axios.post(url, data);
-  const score    = response.data['documentSentiment']['score'];
+  const score    = response.data.documentSentiment.score;
   console.log(score);
   
   return score < 0 ? true : false;
@@ -68,7 +68,7 @@ async function getContent() {
 
     let content = {};
     content.originalContentUrl = response.data.data.images.looping.mp4;
-    content.previewImageUrl    = response['data']['data']['images']['480w_still']['url'];
+    content.previewImageUrl    = response.data.data.images.480w_still.url;
 
     console.log(content.originalContentUrl);
     console.log(content.previewImageUrl);
