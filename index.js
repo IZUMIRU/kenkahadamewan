@@ -58,6 +58,7 @@ async function analyzeSentiment(event) {
 /**
  * GIPHY APIを叩いて、コンテンツを取得する
  *
+ * @see https://developers.giphy.com/explorer/
  * @return array content
  */
 async function getContent() {
@@ -68,7 +69,7 @@ async function getContent() {
 
     let content = {};
     content.originalContentUrl = response.data.data.images.looping.mp4;
-    content.previewImageUrl    = response.data.data.images.480w_still.url;
+    content.previewImageUrl    = response.data.data.images['480w_still'].url;
 
     console.log(content.originalContentUrl);
     console.log(content.previewImageUrl);
