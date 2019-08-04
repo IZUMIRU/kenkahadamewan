@@ -1,5 +1,6 @@
 const server = require('express')();
 const line   = require('@line/bot-sdk');
+const axios  = require('axios');
 const config = {
   channelAccessToken: process.env.LINE_ACCESS_TOKEN,
   channelSecret: process.env.LINE_CHANNEL_SECRET,
@@ -13,7 +14,7 @@ main();
  * メイン処理
  */
 function main() {
-  server.post('/bot/webhook', line.middleware(config), (req, res, next) => {
+  server.post('/bot/webhook', line.middleware(config), function (req, res, next) {
     res.sendStatus(200);
     req.body.events.forEach((event) => {
       if (event.type == 'message' && event.message.type == 'text'){
@@ -32,7 +33,6 @@ function main() {
  * @return void
  */
 async function post(event) {
-  const axios  = require('axios');
   const apiKey = process.env.GCNL_API_KEY;
   const url    = 'https://language.googleapis.com/v1/documents:analyzeSentiment?key=' + apiKey;
   const data   = {
