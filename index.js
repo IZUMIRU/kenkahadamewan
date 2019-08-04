@@ -13,11 +13,11 @@ main();
 /**
  * メイン処理
  */
-async function main() {
+function main() {
   server.post('/bot/webhook', line.middleware(config), function (req, res, next) {
     res.sendStatus(200);
     
-    async.each(req.body.events, function(event, callback){
+    async.each(req.body.events, async function(event, callback){
       if (event.type == 'message' && event.message.type == 'text'){
         const negative = await analyzeSentiment(event);
         if (negative) {
