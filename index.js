@@ -21,7 +21,8 @@ function main() {
       if (event.type == 'message' && event.message.type == 'text'){
         const negative = await analyzeSentiment(event);
         if (negative) {
-          await postMessage(event);
+          const content = await getContent();
+          await postMessage(content);
         }
       }
     });
@@ -55,17 +56,29 @@ async function analyzeSentiment(event) {
 }
 
 /**
+ * GIPHY APIを叩いて、コンテンツを取得する
+ *
+ * @return array content
+ */
+async function getContent() {
+  const response = await axios.get('https://api.giphy.com/v1/gifs/random?api_key=ogwhyS6BMAMzEa9dnLOt3b7Xt3zLk28L&tag=pomeranian&rating=G');
+  console.log(response[0]['data']['images']['looping']['mp4'])
+}
+
+/**
  * LINEで動画を送信する
  *
- * @param object event
+ * @param array content
  * @return void
  */
- function postMessage(event) {
+ function postMessage(content) {
   try {
     client.replyMessage(event.replyToken,{
       type               : 'video',
-      originalContentUrl : 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4',
-      previewImageUrl    : 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
+      // 'https://media2.giphy.com/media/12cPXJ36UX5nO0/giphy-loop.mp4?cid=1dfacafe5d466baf536b67752ee4ea11&rid=giphy-loop.mp4'
+      originalContentUrl : content['originalContentUrl'],
+      // 'https://media3.giphy.com/media/12cPXJ36UX5nO0/480w_s.jpg?cid=1dfacafe5d466baf536b67752ee4ea11&rid=480w_s.jpg'
+      previewImageUrl    : content['previewImageUrl']
     });
   } catch (e) {
     console.error('try catch with await: ' + e);
