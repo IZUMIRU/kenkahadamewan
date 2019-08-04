@@ -61,8 +61,10 @@ async function analyzeSentiment(event) {
  * @return array content
  */
 async function getContent() {
-  const response = await axios.get('https://api.giphy.com/v1/gifs/random?api_key=ogwhyS6BMAMzEa9dnLOt3b7Xt3zLk28L&tag=pomeranian&rating=G');
-  console.log(response[0]['data']['images']['looping']['mp4'])
+  const apiKey = process.env.GIPHY_API_KEY;
+  const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=pomeranian&rating=G`;
+  const response = await axios.get(url);
+  console.log(response)
 }
 
 /**
