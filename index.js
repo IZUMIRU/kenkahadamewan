@@ -6,7 +6,6 @@ const config = {
   channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
 server.listen(process.env.PORT || 3000);
-const client = new line.Client(config);
 
 main();
 
@@ -49,11 +48,14 @@ async function post(event) {
   console.log(score);
 
   if (score < 0) {
-    await client.replyMessage(event.replyToken, {
+    const textClient = new line.Client(config);
+    textClient.replyMessage(event.replyToken, {
       type : 'text',
       text : 'ネガティブ！！'
     });
-    client.replyMessage(event.replyToken,{
+
+    const imageClient = new line.Client(config);
+    imageClient.replyMessage(event.replyToken,{
       type               : 'image',
       originalContentUrl : 'https://i.gyazo.com/e772c3b48a07716226f7184d7f417cda.png',
       previewImageUrl    : 'https://i.gyazo.com/f1fbf098052ee9b1b0ccd16e70051e39.png'
